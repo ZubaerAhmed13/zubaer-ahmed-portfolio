@@ -1,0 +1,71 @@
+/* Large, read-first document preview shown before PDF operations. */
+.workspace-dialog{width:min(1480px,calc(100vw - 20px));max-height:calc(100dvh - 20px)}
+.workspace{max-height:calc(100dvh - 78px);padding:18px}
+.workspace-grid{grid-template-columns:280px minmax(0,1fr)}
+.workspace-main{min-width:0}
+
+.pre-edit-preview{margin:16px 0 18px;border:1px solid #dfe5ec;border-radius:18px;background:#fff;box-shadow:0 14px 32px rgba(28,43,62,.07);overflow:hidden}
+.pre-edit-preview[hidden]{display:none}
+.pre-edit-preview-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 16px;border-bottom:1px solid #e7ebf0;background:linear-gradient(180deg,#fff,#fafbfd)}
+.pre-edit-preview-head>div:first-child{display:grid;gap:2px;min-width:0}
+.pre-edit-kicker{font-size:9px;font-weight:850;letter-spacing:.15em;color:var(--accent-coral-deep,#a83b2b)}
+.pre-edit-preview-head strong{font-size:15px;color:#263244}
+.pre-edit-preview-head small{font-size:11px;color:#6a7687;line-height:1.45}
+.pre-edit-source-tabs{display:flex;gap:6px;max-width:48%;overflow:auto;padding:2px}
+.pre-edit-source-tabs button{flex:0 0 auto;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid #dfe5ec;border-radius:999px;background:#fff;padding:7px 10px;color:#657184;font-size:11px;font-weight:720;cursor:pointer}
+.pre-edit-source-tabs button[aria-current=true]{border-color:#bd4631;background:#fff4f1;color:#8e3325;box-shadow:0 0 0 2px rgba(189,70,49,.08)}
+.pre-edit-preview-body{padding:14px;background:#f3f5f8}
+.pre-edit-viewer-toolbar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pre-edit-viewer-toolbar button{border:1px solid #d8dfe7;border-radius:9px;background:#fff;padding:7px 10px;color:#3f4b5d;font-size:11px;font-weight:720;cursor:pointer}
+.pre-edit-viewer-toolbar button:hover{background:#f8fafc;border-color:#cbd4de}
+.pre-edit-viewer-toolbar [data-pre-edit-status]{min-width:130px;text-align:center;font-size:12px;font-weight:800;color:#344153}
+.pre-edit-viewer-toolbar [data-pre-edit-zoom]{min-width:46px;text-align:center;font-size:11px;font-weight:760;color:#667285;font-variant-numeric:tabular-nums}
+.pre-edit-toolbar-divider{width:1px;height:22px;background:#dfe5ec;margin:0 2px}
+.pre-edit-viewer-layout{display:grid;grid-template-columns:188px minmax(0,1fr);gap:14px;align-items:stretch;min-height:600px}
+.pre-edit-thumbnail-rail{height:min(72vh,860px);overflow-y:auto;overflow-x:hidden;border:1px solid #dce3ea;border-radius:13px;background:#e9edf2;scrollbar-gutter:stable;overscroll-behavior:contain}
+.pre-edit-thumbnail-track{position:relative;width:100%}
+.pre-edit-thumbnail-item{position:absolute;left:7px;right:7px;height:166px;border:1px solid #d8e0e8;border-radius:11px;background:#fff;padding:8px;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:6px;place-items:center;cursor:pointer;overflow:hidden;box-shadow:0 2px 7px rgba(28,43,62,.04)}
+.pre-edit-thumbnail-item[aria-current=page]{border-color:#bd4631;box-shadow:0 0 0 2px rgba(189,70,49,.12)}
+.pre-edit-thumbnail-item canvas{display:block;max-width:145px;max-height:126px;width:auto!important;height:auto!important;background:#fff;box-shadow:0 2px 8px rgba(17,24,39,.12)}
+.pre-edit-thumbnail-item span{font-size:11px;color:#667285;line-height:1}
+.pre-edit-thumbnail-item.preview-error span::after{content:' · unavailable';color:#9f3d34}
+.pre-edit-canvas-shell{min-width:0;height:min(72vh,860px);min-height:600px;overflow:auto;overscroll-behavior:contain;border:1px solid #d8e0e8;border-radius:14px;background:#dde3ea;padding:20px;display:flex;align-items:flex-start;justify-content:center;touch-action:pan-y}
+.pre-edit-canvas-shell:focus-visible{outline:3px solid #7c9cff;outline-offset:2px}
+.pre-edit-canvas-shell canvas{display:block;flex:0 0 auto;background:#fff;box-shadow:0 10px 30px rgba(23,35,51,.20)}
+.pre-edit-preview-error{min-height:300px;display:grid;place-content:center;gap:6px;text-align:center;border:1px dashed #d9c4c0;border-radius:14px;background:#fff7f5;color:#7e3e34;padding:30px}
+.pre-edit-preview-error span,.pre-edit-preview-error small{color:#7f6b68}
+.pre-edit-image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-height:min(72vh,860px);overflow:auto;padding:2px}
+.pre-edit-image-grid figure{margin:0;border:1px solid #dce3ea;border-radius:13px;background:#fff;padding:9px;box-shadow:0 4px 14px rgba(28,43,62,.05)}
+.pre-edit-image-grid img{display:block;width:100%;height:220px;object-fit:contain;background:#eef1f5;border-radius:9px}
+.pre-edit-image-grid figcaption{margin-top:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#647184}
+
+/* The dedicated View PDF workspace should also use the larger viewing area. */
+.workspace-main #preview-area .viewer-layout{grid-template-columns:188px minmax(0,1fr);gap:14px}
+.workspace-main #preview-area .thumbnail-rail{height:min(72vh,860px)}
+.workspace-main #preview-area .canvas-shell,
+.workspace-main #preview-area .viewer-layout>.canvas-shell{min-height:600px;max-height:min(72vh,860px);padding:20px}
+
+@media(max-width:980px){
+  .workspace-dialog{width:min(100vw - 12px,1480px);max-height:calc(100dvh - 12px)}
+  .workspace{max-height:calc(100dvh - 70px);padding:12px}
+  .workspace-grid{grid-template-columns:1fr}
+  .workspace-side{display:none}
+  .pre-edit-preview-head{align-items:flex-start;flex-direction:column}
+  .pre-edit-source-tabs{max-width:100%;width:100%}
+  .pre-edit-viewer-layout,.workspace-main #preview-area .viewer-layout{grid-template-columns:150px minmax(0,1fr)}
+  .pre-edit-viewer-layout{min-height:520px}
+  .pre-edit-thumbnail-rail{height:min(66vh,720px)}
+  .pre-edit-canvas-shell{height:min(66vh,720px);min-height:520px;padding:12px}
+  .workspace-main #preview-area .canvas-shell,.workspace-main #preview-area .viewer-layout>.canvas-shell{min-height:520px;max-height:min(66vh,720px);padding:12px}
+}
+
+@media(max-width:700px){
+  .pre-edit-toolbar-divider{display:none}
+  .pre-edit-viewer-layout,.workspace-main #preview-area .viewer-layout{grid-template-columns:1fr}
+  .pre-edit-viewer-layout{min-height:0}
+  .pre-edit-thumbnail-rail{height:170px}
+  .pre-edit-thumbnail-item{height:160px}
+  .pre-edit-canvas-shell{height:58vh;min-height:390px;padding:8px}
+  .workspace-main #preview-area .thumbnail-rail{height:170px}
+  .workspace-main #preview-area .canvas-shell,.workspace-main #preview-area .viewer-layout>.canvas-shell{min-height:390px;max-height:58vh;padding:8px}
+}

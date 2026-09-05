@@ -64,6 +64,7 @@ export function mountWorkspace(container: HTMLDivElement, tool: ToolDefinition):
   let touched = false;
   let saveTimer: number | null = null;
   let generation = 0;
+  let persistChain: Promise<void> = Promise.resolve();
 
   const showRecovery = (updatedAt: string): void => {
     const files = fileMetadata.length
@@ -73,21 +74,30 @@ export function mountWorkspace(container: HTMLDivElement, tool: ToolDefinition):
     recoveryPanel.hidden = false;
   };
 
-  const persist = async (): Promise<void> => {
-    const currentGeneration = ++generation;
+  const persist = async (currentGeneration: number): Promise<void> => {
+    if (disposed || currentGeneration !== generation) return;
     try {
       const snapshot = await saveProjectSnapshot({ toolId: tool.id, files: fileMetadata, options: collectOptions(optionsForm) });
       if (disposed || currentGeneration !== generation) return;
       saveStatus.textContent = `Recovery state saved locally at ${new Date(snapshot.updatedAt).toLocaleTimeString()}.`;
     } catch {
-      if (!disposed) saveStatus.textContent = 'Local recovery storage is unavailable in this browser context.';
+      if (!disposed && currentGeneration === generation) saveStatus.textContent = 'Local recovery storage is unavailable in this browser context.';
     }
   };
 
   const schedulePersist = (): void => {
     touched = true;
+    generation += 1;
+    const scheduledGeneration = generation;
     if (saveTimer !== null) window.clearTimeout(saveTimer);
-    saveTimer = window.setTimeout(() => { saveTimer = null; void persist(); }, 120);
+    saveStatus.textContent = 'Saving recovery state locally…';
+    saveTimer = window.setTimeout(() => {
+      saveTimer = null;
+      persistChain = persistChain.then(
+        () => persist(scheduledGeneration),
+        () => persist(scheduledGeneration)
+      );
+    }, 120);
   };
 
   fileInput.addEventListener('change', () => {
@@ -119,7 +129,13 @@ export function mountWorkspace(container: HTMLDivElement, tool: ToolDefinition):
 
   recoveryPanel.addEventListener('click', (event) => {
     if (!(event.target as HTMLElement).closest('[data-clear-recovery]')) return;
-    void clearProjectSnapshot().then(() => {
+    generation += 1;
+    if (saveTimer !== null) {
+      window.clearTimeout(saveTimer);
+      saveTimer = null;
+    }
+    persistChain = persistChain.then(async () => {
+      await clearProjectSnapshot();
       if (disposed) return;
       fileMetadata = [];
       recoveryPanel.hidden = true;
@@ -140,6 +156,7 @@ export function mountWorkspace(container: HTMLDivElement, tool: ToolDefinition):
 
   container.addEventListener('docflow-cleanup', () => {
     disposed = true;
+    generation += 1;
     if (saveTimer !== null) window.clearTimeout(saveTimer);
   }, { once: true });
 }

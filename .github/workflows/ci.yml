@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: docflow-ci-${{ github.ref }}
+  group: docflow-ci-v3-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

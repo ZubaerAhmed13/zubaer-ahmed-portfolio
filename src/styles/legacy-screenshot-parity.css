@@ -1,0 +1,236 @@
+/* Screenshot-parity refinements for the preserved DocFlow editor experience.
+ * This layer changes presentation and safe file-order/output-name controls only.
+ */
+
+.legacy-files-pane .legacy-native-file-input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.legacy-upload-icon {
+  display: block;
+  margin-bottom: 2px;
+  color: #c6503f !important;
+  font-size: 19px !important;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.legacy-choose-files {
+  min-width: 112px;
+  min-height: 42px;
+  margin: 0 0 5px;
+  padding: 0 14px;
+  border: 1px solid #cbd6df;
+  border-radius: 7px;
+  background: #fff;
+  color: #263646;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.legacy-choose-files:hover {
+  border-color: #b7c5d0;
+  background: #f8fafc;
+}
+
+.legacy-files-pane .file-row {
+  min-height: 106px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 7px;
+}
+
+.legacy-files-pane .file-row > .order {
+  display: none;
+}
+
+.legacy-file-row-actions {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.legacy-files-pane .legacy-file-row-actions button {
+  min-width: 0;
+  min-height: 32px;
+  padding: 0 8px;
+}
+
+.legacy-files-pane .legacy-file-row-actions .legacy-replace-file,
+.legacy-files-pane .legacy-file-row-actions [data-remove] {
+  color: #c64f3e;
+  font-weight: 790;
+}
+
+.legacy-files-pane .legacy-file-row-actions .legacy-file-move {
+  width: 36px;
+  padding: 0;
+  border: 1px solid #d9e2e9;
+  border-radius: 7px;
+  color: #708397;
+  font-size: 16px;
+}
+
+.legacy-files-pane .legacy-file-row-actions .legacy-file-move:disabled {
+  opacity: .42;
+}
+
+.legacy-page-edit-tools {
+  margin-left: 2px;
+}
+
+.legacy-page-edit-tools [data-parity-trash] {
+  width: 44px;
+  padding: 0;
+  font-size: 17px;
+}
+
+.legacy-history-tools {
+  margin-right: 2px;
+}
+
+.legacy-history-tools button {
+  width: 44px;
+  padding: 0;
+  font-size: 18px;
+}
+
+.legacy-settings-pane .legacy-output-name {
+  margin-top: 16px;
+}
+
+.legacy-settings-pane .legacy-output-name label {
+  display: grid;
+  gap: 7px;
+  color: #354658;
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.legacy-settings-pane .legacy-output-name input {
+  width: 100%;
+  min-height: 43px;
+  padding: 0 11px;
+  border: 1px solid #cbd7e0;
+  border-radius: 7px;
+  background: #fff;
+  color: #263746;
+  font: inherit;
+  font-weight: 560;
+  box-shadow: none;
+}
+
+.legacy-settings-pane .legacy-output-name input:focus {
+  outline: 0;
+  border-color: #d16b5a;
+  box-shadow: 0 0 0 3px rgba(201, 78, 61, .10);
+}
+
+.legacy-settings-pane .legacy-output-name .help {
+  margin: 6px 0 0;
+  color: #738597;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.legacy-file-added-status {
+  margin-top: 13px;
+  padding: 12px 13px;
+  border: 1px solid #9ed8b7;
+  border-radius: 7px;
+  background: #eefaf3;
+  color: #367457;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.legacy-file-added-status[hidden] {
+  display: none;
+}
+
+.legacy-live-preview .pre-edit-viewer-toolbar {
+  gap: 8px;
+}
+
+.legacy-live-preview .pre-edit-viewer-toolbar [data-pre-edit-status] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legacy-live-preview .legacy-page-meta {
+  margin-left: auto;
+  color: #718396;
+  white-space: nowrap;
+}
+
+.workspace[data-parity-file-count="0"] .legacy-live-preview .pre-edit-preview-head,
+.workspace[data-parity-file-count="1"] .legacy-live-preview .pre-edit-preview-head {
+  display: none;
+}
+
+.legacy-live-preview .pre-edit-thumbnail-item[data-parity-selected="true"] {
+  background: #fff7f4;
+  box-shadow: inset 0 0 0 2px rgba(203, 76, 57, .45);
+}
+
+/* Loop-safe alias for the original empty centre canvas. */
+.legacy-preview-empty-ui {
+  min-width: 0;
+  min-height: 0;
+  grid-row: 2;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 30px;
+  color: #6a7d90;
+  text-align: center;
+}
+
+.legacy-preview-empty-ui[hidden] {
+  display: none;
+}
+
+.legacy-preview-empty-ui strong {
+  color: #26384a;
+  font-size: 14px;
+  font-weight: 790;
+}
+
+.legacy-preview-empty-ui > span:last-child {
+  font-size: 12px;
+}
+
+/* Keep the center workspace close to the original desktop proportions. */
+@media (min-width: 1180px) {
+  .legacy-editor-body {
+    grid-template-columns: 270px minmax(0, 1fr) 320px;
+  }
+
+  .legacy-live-preview .pre-edit-viewer-layout {
+    grid-template-columns: 176px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .legacy-page-edit-tools,
+  .legacy-history-tools {
+    display: none;
+  }
+
+  .legacy-file-row-actions {
+    gap: 2px;
+  }
+}
